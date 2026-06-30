@@ -1,8 +1,10 @@
-import { education } from "@/content/education";
+import { getEducation } from "@/db/queries";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SmallCard } from "@/components/ui/SmallCard";
 
-export function Education() {
+export async function Education() {
+  const education = await getEducation();
+
   return (
     <section id="section-education" className="mt-[8%] scroll-mt-12">
       <div className="max-w-[90%]">

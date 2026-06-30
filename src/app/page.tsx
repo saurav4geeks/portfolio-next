@@ -7,6 +7,9 @@ import { Education } from "@/components/sections/Education";
 import { Projects } from "@/components/sections/Projects";
 import { Contact } from "@/components/sections/Contact";
 
+// Content is served from the database (CMS-managed), so render on demand.
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <div className="relative min-h-screen">

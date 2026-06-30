@@ -1,8 +1,10 @@
-import { experience } from "@/content/experience";
+import { getExperience } from "@/db/queries";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { AccordionCard } from "@/components/ui/AccordionCard";
 
-export function Experience() {
+export async function Experience() {
+  const experience = await getExperience();
+
   return (
     <section id="section-expertise" className="mt-[8%] scroll-mt-12">
       <div className="max-w-[90%]">

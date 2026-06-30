@@ -1,9 +1,10 @@
-import { projects } from "@/content/projects";
-import { skills } from "@/content/skills";
+import { getProjects, getSkills } from "@/db/queries";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { AccordionCard } from "@/components/ui/AccordionCard";
 
-export function Projects() {
+export async function Projects() {
+  const [projects, skills] = await Promise.all([getProjects(), getSkills()]);
+
   return (
     <section id="section-projects" className="mt-[8%] scroll-mt-12">
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-[2fr_1fr] lg:gap-16">
@@ -17,8 +18,8 @@ export function Projects() {
                 title={project.title}
                 subtitle={project.stack}
                 highlights={project.highlights}
-                link={project.link}
-                linkLabel={project.linkLabel}
+                link={project.link ?? undefined}
+                linkLabel={project.linkLabel ?? undefined}
                 defaultOpen={false}
               />
             ))}
@@ -29,7 +30,7 @@ export function Projects() {
           <h4 className="text-xl font-semibold">MY SKILLS</h4>
           <div className="mt-6 space-y-5">
             {skills.map((group) => (
-              <div key={group.label}>
+              <div key={group.id}>
                 <p className="text-xs font-semibold uppercase tracking-wider text-accent">
                   {group.label}
                 </p>
