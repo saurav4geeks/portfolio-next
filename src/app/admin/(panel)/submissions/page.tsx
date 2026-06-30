@@ -37,8 +37,16 @@ export default async function SubmissionsPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <time className="text-xs text-muted">
-                    {s.createdAt.toLocaleString()}
+                  <time
+                    dateTime={s.createdAt.toISOString()}
+                    className="text-xs text-muted"
+                  >
+                    {s.createdAt.toLocaleString("en-IN", {
+                      timeZone: "Asia/Kolkata",
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    })}{" "}
+                    IST
                   </time>
                   <form action={deleteSubmission}>
                     <input type="hidden" name="id" value={s.id} />
