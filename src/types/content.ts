@@ -61,6 +61,8 @@ export interface ProjectItem {
   stack: string;
   highlights: string[];
   link?: string;
+  /** Custom label for the link button (defaults to "View Project"). */
+  linkLabel?: string;
 }
 
 export interface EducationItem {

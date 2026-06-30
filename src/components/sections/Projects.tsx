@@ -18,6 +18,7 @@ export function Projects() {
                 subtitle={project.stack}
                 highlights={project.highlights}
                 link={project.link}
+                linkLabel={project.linkLabel}
                 defaultOpen={false}
               />
             ))}
