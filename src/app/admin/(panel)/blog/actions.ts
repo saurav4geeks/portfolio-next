@@ -20,8 +20,7 @@ async function uniqueSlug(base: string, excludeId?: number): Promise<string> {
   const db = getDb();
   let candidate = base || "post";
   let n = 1;
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
+  for (;;) {
     const rows = await db
       .select({ id: blogPosts.id })
       .from(blogPosts)
