@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Saurav Suman — Portfolio
 
-## Getting Started
+Personal portfolio site. A rebuild of the original Create React App version on a
+modern, modular stack, designed to be extended (blog, more pages, theming) over
+time. The visual language of the original is preserved — see
+[`DESIGN.md`](DESIGN.md).
 
-First, run the development server:
+## Stack
+
+- **Next.js 16** (App Router) + **React 19**
+- **TypeScript**
+- **Tailwind CSS v4** (CSS-first config, design tokens via `@theme`)
+- **next/font** — self-hosted Playfair Display + IBM Plex Mono
+- **Formspree** for the contact form
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Other scripts:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build    # production build
+npm run start    # serve the production build
+npm run lint     # eslint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project structure
 
-## Learn More
+```
+src/
+  app/            # App Router: layout (fonts/metadata), page, global tokens
+  components/
+    layout/       # Sidebar, Footer
+    sections/     # Banner, Intro, Experience, Education, Projects, Contact
+    ui/           # AccordionCard, SmallCard, SectionHeading, HoverUnderlineLink, …
+  content/        # all site copy, as typed data (site, intro, experience, …)
+  types/          # content interfaces
+  lib/            # cn() class helper
+public/
+  images/         # banner + intro images
+  resume/         # downloadable résumé PDF
+```
 
-To learn more about Next.js, take a look at the following resources:
+**Content is data-driven** — components are presentational and read from
+`src/content/*.ts`. To update copy (a new role, project, or skill), edit the
+relevant content file; no component changes needed. See
+[`DESIGN.md`](DESIGN.md) for the full design system and extension guide.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment (Vercel)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Push this repo to GitHub.
+2. Import it at [vercel.com/new](https://vercel.com/new) — Next.js is detected
+   automatically; no configuration required.
+3. Every push to the default branch deploys to production; PRs get previews.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The contact form posts to Formspree (form id in
+[`src/components/sections/Contact.tsx`](src/components/sections/Contact.tsx)).

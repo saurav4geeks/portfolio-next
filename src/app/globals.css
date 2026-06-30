@@ -1,26 +1,81 @@
 @import "tailwindcss";
 
+/* Class-based dark mode so a theme toggle can be wired later without churn. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------ */
+/* Design tokens — see DESIGN.md. Light theme is the source of truth;  */
+/* the .dark block mirrors every token so theming stays one-to-one.    */
+/* ------------------------------------------------------------------ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #faf2f0; /* page background (cream) */
+  --surface: #ffffff; /* cards / elevated surfaces */
+  --panel: #f1e7e3; /* expanded accordion panels, borders */
+  --ink: #232323; /* primary text & dark headings */
+  --navy: #0a1a2b; /* sidebar nav links / logo-on-light */
+  --muted: #595959; /* secondary text, dates */
+  --accent: #ab5232; /* terracotta — primary accent */
+  --accent-hover: #e8604c; /* accent hover / active */
+  --heading: #629489; /* teal section headings */
+  --border: #f1e7e3;
 }
 
+.dark {
+  --bg: #14110f;
+  --surface: #1d1916;
+  --panel: #241d1a;
+  --ink: #f3ece9;
+  --navy: #e7ddd8;
+  --muted: #a99f99;
+  --accent: #c9714e;
+  --accent-hover: #e8604c;
+  --heading: #7bb3a6;
+  --border: #2c2522;
+}
+
+/* Expose tokens + fonts to Tailwind utilities (bg-bg, text-ink, font-serif…). */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-panel: var(--panel);
+  --color-ink: var(--ink);
+  --color-navy: var(--navy);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-heading: var(--heading);
+  --color-border: var(--border);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-serif: var(--font-playfair), serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-mono);
+}
+
+/* Signature interaction: left-to-right underline that draws on hover.
+   Uses currentColor so it adapts to light text on the banner and dark
+   text in the sidebar. */
+.hover-underline {
+  position: relative;
+  display: inline-block;
+}
+.hover-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+.hover-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
