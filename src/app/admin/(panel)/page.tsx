@@ -5,6 +5,7 @@ export const dynamic = "force-dynamic";
 
 const cards = [
   { href: "/admin/submissions", label: "Submissions", key: "submissions" },
+  { href: "/admin/blog", label: "Blog posts", key: "posts" },
   { href: "/admin/experience", label: "Experience", key: "experience" },
   { href: "/admin/projects", label: "Projects", key: "projects" },
   { href: "/admin/skills", label: "Skill groups", key: "skills" },

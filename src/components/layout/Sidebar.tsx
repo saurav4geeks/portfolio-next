@@ -30,6 +30,14 @@ export function Sidebar() {
               </HoverUnderlineLink>
             </li>
           ))}
+          <li>
+            <HoverUnderlineLink
+              href="/blog"
+              className="text-[15px] font-semibold uppercase tracking-[0.1em] text-navy transition-colors hover:text-accent"
+            >
+              Writing
+            </HoverUnderlineLink>
+          </li>
         </ul>
       </nav>
 

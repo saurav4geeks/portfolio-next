@@ -5,3 +5,12 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+/** Format a date as a readable day in IST, e.g. "30 Jun 2026". */
+export function formatDate(date: Date | string | null | undefined) {
+  if (!date) return "";
+  return new Date(date).toLocaleDateString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    dateStyle: "medium",
+  });
+}

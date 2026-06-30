@@ -3,6 +3,7 @@ import {
   serial,
   text,
   integer,
+  boolean,
   timestamp,
 } from "drizzle-orm/pg-core";
 
@@ -75,6 +76,23 @@ export const educationItems = pgTable("education_items", {
     .notNull(),
 });
 
+export const blogPosts = pgTable("blog_posts", {
+  id: serial("id").primaryKey(),
+  slug: text("slug").notNull().unique(),
+  title: text("title").notNull(),
+  excerpt: text("excerpt").notNull().default(""),
+  content: text("content").notNull().default(""),
+  coverImage: text("cover_image"),
+  published: boolean("published").notNull().default(false),
+  publishedAt: timestamp("published_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+});
+
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
 export type NewContactSubmission = typeof contactSubmissions.$inferInsert;
 
@@ -82,3 +100,4 @@ export type ExperienceRow = typeof experienceItems.$inferSelect;
 export type ProjectRow = typeof projectItems.$inferSelect;
 export type SkillGroupRow = typeof skillGroups.$inferSelect;
 export type EducationRow = typeof educationItems.$inferSelect;
+export type BlogPostRow = typeof blogPosts.$inferSelect;

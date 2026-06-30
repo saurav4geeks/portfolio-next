@@ -1,7 +1,8 @@
 import "server-only";
-import { asc, desc, sql } from "drizzle-orm";
+import { and, asc, desc, eq, sql } from "drizzle-orm";
 import { getDb } from "./index";
 import {
+  blogPosts,
   contactSubmissions,
   educationItems,
   experienceItems,
@@ -38,6 +39,40 @@ export async function getEducation() {
 
 /* ----------------------------- Admin reads ------------------------------ */
 
+/* ------------------------------- Blog ----------------------------------- */
+
+export async function getPublishedPosts() {
+  return getDb()
+    .select()
+    .from(blogPosts)
+    .where(eq(blogPosts.published, true))
+    .orderBy(desc(blogPosts.publishedAt));
+}
+
+export async function getPublishedPostBySlug(slug: string) {
+  const [post] = await getDb()
+    .select()
+    .from(blogPosts)
+    .where(and(eq(blogPosts.slug, slug), eq(blogPosts.published, true)))
+    .limit(1);
+  return post ?? null;
+}
+
+export async function getAllPostsAdmin() {
+  return getDb().select().from(blogPosts).orderBy(desc(blogPosts.updatedAt));
+}
+
+export async function getPostById(id: number) {
+  const [post] = await getDb()
+    .select()
+    .from(blogPosts)
+    .where(eq(blogPosts.id, id))
+    .limit(1);
+  return post ?? null;
+}
+
+/* ------------------------------- Admin ---------------------------------- */
+
 export async function getSubmissions() {
   return getDb()
     .select()
@@ -54,6 +89,7 @@ export async function getCounts() {
       projects: sql<number>`(select count(*) from ${projectItems})`,
       skills: sql<number>`(select count(*) from ${skillGroups})`,
       education: sql<number>`(select count(*) from ${educationItems})`,
+      posts: sql<number>`(select count(*) from ${blogPosts})`,
     })
     .from(sql`(select 1) as _`);
   return {
@@ -62,5 +98,6 @@ export async function getCounts() {
     projects: Number(counts.projects),
     skills: Number(counts.skills),
     education: Number(counts.education),
+    posts: Number(counts.posts),
   };
 }
