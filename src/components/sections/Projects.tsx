@@ -20,7 +20,7 @@ export async function Projects() {
                 highlights={project.highlights}
                 link={project.link ?? undefined}
                 linkLabel={project.linkLabel ?? undefined}
-                defaultOpen={false}
+                defaultOpen
               />
             ))}
           </div>
@@ -28,15 +28,20 @@ export async function Projects() {
 
         <aside className="lg:pt-2">
           <h4 className="text-xl font-semibold">MY SKILLS</h4>
-          <div className="mt-6 space-y-5">
+          <div className="mt-6 space-y-4">
             {skills.map((group) => (
               <div key={group.id}>
                 <p className="text-xs font-semibold uppercase tracking-wider text-accent">
                   {group.label}
                 </p>
-                <ul className="mt-1 space-y-1 text-sm leading-6">
+                <ul className="mt-2 flex flex-wrap gap-1.5">
                   {group.items.map((item) => (
-                    <li key={item}>{item}</li>
+                    <li
+                      key={item}
+                      className="rounded-full border border-border bg-surface px-2.5 py-1 text-xs text-ink"
+                    >
+                      {item}
+                    </li>
                   ))}
                 </ul>
               </div>
