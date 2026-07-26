@@ -19,6 +19,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://saurav4geeks.in"),
   title: `${site.name} — ${site.role}`,
   description:
     "Backend engineer with 3+ years building production systems in fintech and data platforms — Kotlin/Spring Boot microservices, event-driven pipelines and clean, maintainable design.",
